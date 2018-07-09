@@ -1,4 +1,5 @@
 require 'json'
+require 'erb'
 
 s = <<EOF
 {
@@ -53,3 +54,15 @@ result.each do |id, val|
   puts "ID:   #{id}"
   puts "Name: #{name}"
 end
+
+puts '---'
+
+tpl = ERB.new <<-EOF
+  <ul>
+    <% result.each do |id, val| %>
+      <li><%= val['id'] %> - <%= val['name'] %></li>
+    <% end %>
+  </ul>
+EOF
+
+puts tpl.result(binding)
